@@ -1,6 +1,3 @@
 [submodule "green-env-theme"]
 	path = projects/green-env-theme
 	url = git@github.com:0xdharanesh/green-env-theme.git
-[submodule "projects/freelance"]
-	path = projects/freelance
-	url = git@github.com:0xdharanesh/freelance.git
