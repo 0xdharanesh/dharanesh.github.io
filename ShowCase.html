@@ -68,16 +68,13 @@
             .gallery-item {
                 position: relative;
                 width: 300px;
-                /* Fixed width for the image container */
                 height: 300px;
-                /* Fixed height for the image container */
                 gap: 1px;
                 overflow: hidden;
                 border-radius: 8px;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
                 display: flex;
                 flex-direction: column;
-                /* Stack the image and description vertically */
                 justify-content: flex-start;
                 align-items: center;
                 background-color: #ffffff00;
@@ -107,99 +104,64 @@
             }
 
             .certificate-list {
-                display: flex;
-                flex-wrap: nowrap;
-                /* Keep items in a single row */
-                gap: 20px;
-                /* Space between certificates */
-                justify-content: flex-start;
-                /* Left-aligned initially */
-                overflow-x: auto;
-                /* Allow horizontal scrolling */
-                padding: 20px;
-                margin-top: 20px;
-                max-width: 100%;
-                scroll-behavior: smooth;
-                /* Smooth scrolling for navigation */
-            }
-
-            .certificate-item {
-                width: 300px;
-                height: 300px;
-                border-radius: 8px;
-                overflow: hidden;
-                background-color: rgba(255, 255, 255, 0.1);
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                transition: transform 0.3s ease;
-            }
-
-            .certificate-item img {
-                width: 100%;
-                height: 80%;
-                object-fit: contain;
-                margin-bottom: 8px;
-            }
-
-            .certificate-item:hover {
-                transform: scale(1.1);
-            }
-
-            .nav-buttons {
-                display: flex;
-                justify-content: center;
-                gap: 10px;
-                margin-top: 10px;
-            }
-
-            .nav-buttons button {
-                padding: 10px 20px;
-                border: none;
-                border-radius: 5px;
-                background-color: #555;
-                color: white;
-                cursor: pointer;
-                font-size: 16px;
-                transition: background-color 0.3s ease;
-            }
-
-            .nav-buttons button:hover {
-                background-color: #777;
-            }
-        </style>
-        <style>
-            .certificate-list {
+                position: relative;
                 display: grid;
                 grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
                 gap: 20px;
                 padding: 20px;
                 justify-items: center;
+                overflow: hidden;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                background-color: #ffffff00;
+                margin-right: 1px;
+                /* Center the certificate list */
+                justify-content: center;
+                align-items: center;
             }
 
             .certificate-item {
-                width: 300px;
-                height: 300px;
-                border-radius: 8px;
+                position: relative;
+                width: 400px;
+                height: 400px;
+                gap: 1px;
                 overflow: hidden;
-                background-color: rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+                background-color: rgba(255, 255, 255, 0.1);
                 text-align: center;
                 transition: transform 0.3s ease;
             }
 
+            .certificate-item canvas {
+                width: 100%;
+                /* Make canvas width fully match the container */
+
+                height: 100%;
+                /* Adjust height to maintain aspect ratio */
+                object-fit: contain;
+                /* Ensure the content fits inside without cropping */
+                display: block;
+                /* Removes unwanted inline gaps */
+            }
+
             .certificate-item img {
                 width: 100%;
-                height: 80%;
+                height: 100%;
                 object-fit: contain;
                 margin-bottom: 8px;
+            }
+
+            .certificate-item p {
+                font-size: 16px;
+                color: white;
+                padding: 8px;
+                background-color: rgba(0, 0, 0, 0.5);
+                width: 100%;
             }
 
             .certificate-item:hover {
@@ -310,7 +272,7 @@
                 photos: "1U1PiyXsOYeS3BEj58un29f2XMtYb5RhA", // Photos folder ID
                 certificates: "1zJPPsZIjU11ZOx7yzGPDKFZXPeGgjHSW", // Certificates folder ID
             };
-            const folderId = "1U1PiyXsOYeS3BEj58un29f2XMtYb5RhA"; // Photos folder ID
+
             const apiKey = "AIzaSyB8P_hvbRkqHa4ijc8sxD9WSjN1o1kryfs"; // API Key
 
             // Fetch files from Google Drive
@@ -360,18 +322,14 @@
                 });
             }
 
-            // Initialize gallery display
-
             // Convert PDF to image using PDF.js and display one image at a time
             pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.worker.min.js';
 
-            
             async function displayCertificates() {
                 const data = await fetchFiles(folderIds.certificates);
                 const certificateListDiv = document.getElementById("certificateList");
                 const prevButton = document.getElementById("prevPage");
                 const nextButton = document.getElementById("nextPage");
-
                 let currentIndex = 0; // Index of the currently displayed certificate
                 const certificateItems = []; // Store certificate elements for navigation
 
@@ -387,30 +345,44 @@
                         const canvas = document.createElement("canvas");
                         certificateItem.appendChild(canvas);
 
-                        // Fetch the PDF file from Google Drive
+                        // Use the Google Drive API URL to get the PDF file
                         const pdfUrl = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${apiKey}`;
+
                         try {
+                            // Fetch the PDF
                             const response = await fetch(pdfUrl);
                             if (!response.ok) throw new Error("Failed to fetch PDF");
 
+                            // Get the PDF blob
                             const blob = await response.blob();
                             const objectURL = URL.createObjectURL(blob);
 
-                            // Load and render the PDF using PDF.js
+                            // Use PDF.js to load and render the PDF
                             const pdf = await pdfjsLib.getDocument(objectURL).promise;
-                            const page = await pdf.getPage(1); // Get the first page
+                            const page = await pdf.getPage(1); // Render only the first page
+
                             const viewport = page.getViewport({ scale: 1 });
                             const context = canvas.getContext("2d");
+
+                            // Set canvas size to match PDF page size
                             canvas.width = viewport.width;
                             canvas.height = viewport.height;
 
+                            // Render the page on the canvas
                             await page.render({
                                 canvasContext: context,
                                 viewport: viewport,
                             }).promise;
+                    certificateListDiv.innerHTML = "";
 
                             // Add the completed certificate item to the list
                             certificateItems.push(certificateItem);
+                            if (certificateItems[currentIndex]) {
+                                certificateListDiv.appendChild(certificateItems[currentIndex]);
+                            }
+                            // Update button states
+                    prevButton.disabled = currentIndex === 0;
+                    nextButton.disabled = currentIndex === certificateItems.length - 1;
                         } catch (error) {
                             console.error("Error loading PDF:", error);
                         }
@@ -421,12 +393,10 @@
                 function updateDisplay() {
                     // Clear the certificate list container
                     certificateListDiv.innerHTML = "";
-
                     // Add only the current certificate to the display
                     if (certificateItems[currentIndex]) {
                         certificateListDiv.appendChild(certificateItems[currentIndex]);
                     }
-
                     // Update button states
                     prevButton.disabled = currentIndex === 0;
                     nextButton.disabled = currentIndex === certificateItems.length - 1;
@@ -439,7 +409,6 @@
                         updateDisplay();
                     }
                 });
-
                 nextButton.addEventListener("click", () => {
                     if (currentIndex < certificateItems.length - 1) {
                         currentIndex++;
@@ -451,8 +420,6 @@
                 updateDisplay();
             }
 
-
-            // Initialize both displays
             displayGallery();
             displayCertificates();
         </script>
