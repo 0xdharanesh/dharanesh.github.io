@@ -3,6 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Dharanesh</title>
 		<link rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
@@ -55,6 +56,7 @@
 			/* #Image */
 			.home-img img {
 				margin-left: 100px;
+				margin-right: 100px;
 				transform: translateX(20px);
 				/* Moves the image 20px to the right */
 				color: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
@@ -73,11 +75,57 @@
 				transition: 0.5s ease;
 			}
 
-			.btn :hover {
+			.btn:hover {
 				box-shadow: none;
 			}
 
-			@media (max-width: 700px) {}
+			/* Media Queries */
+			@media (max-width: 576px) {
+				/* .cd-header {
+                    position: relative;
+                    width: 100%;
+                    text-align: center;
+                } */
+				.logo-wrap a {
+                    position: relative;
+                    font-size: 1.5rem;
+                    /* Smaller logo size */
+
+                }
+				.home {
+					padding-left: 20px;
+					flex-direction: column;
+					align-items: center;
+					text-align: center;
+				}
+
+				.home-img {
+					margin-bottom: 20px;
+				}
+
+				/* .home-img img {
+					width: auto;
+					height: auto;
+					object-fit: cover;
+					object-position: center;
+				} */
+
+				.home-content h1 {
+					font-size: 2rem;
+				}
+
+				.home-content h3 {
+					font-size: 1.2rem;
+				}
+
+				.home-content p {
+					font-size: 0.9rem;
+				}
+
+				.home-content {
+					padding: 0 20px;
+				}
+			}
 		</style>
 	</head>
 
@@ -121,21 +169,23 @@
 
 		<div class="section full-height over-hide">
 			<section class="home" id="home">
+				<div class="home-img">
+					<img src="images/for-home-pg.png" alt="Home Page Image" />
+				</div>
+				<br>
 				<div class="home-content">
 					<h3>Hello, It's Me</h3>
 					<h1>Dharanesh</h1>
 					<h3>A <span>Tech Guy</span></h3>
 					<p>
-						with the capacity to pick up new technologies rapidly
+						With the capacity to pick up new technologies rapidly
 						and apply them.
 					</p>
 					<a href="#" class="btn">Know More</a>
 				</div>
-				<div class="home-img">
-					<img src="images/for-home-pg.png" alt="" />
-				</div>
 			</section>
 		</div>
+
 		<div class="cursor" id="cursor"></div>
 		<div class="cursor2" id="cursor2"></div>
 		<div class="cursor3" id="cursor3"></div>

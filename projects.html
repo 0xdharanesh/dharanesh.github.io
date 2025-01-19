@@ -140,15 +140,35 @@
             }
 
             /* Responsive Design */
-            @media screen and (max-width: 768px) {
+            @media screen and (max-width: 576px) {
+
+                /* body {
+                    padding-top: 70px;
+                } */
+
+                .cd-header {
+                    position: relative;
+                    /* Allow header to scroll with content */
+                    width: 100%;
+                    text-align: center;
+                }
+
+                .logo-wrap a {
+                    position: relative;
+                    font-size: 1.5rem;
+                    /* Smaller logo size */
+
+                }
+
                 .projects {
                     flex-direction: column;
                     align-items: center;
                 }
 
                 .project-card {
-                    max-width: 100%;
+                    max-width: 80%;
                 }
+
             }
         </style>
     </head>
