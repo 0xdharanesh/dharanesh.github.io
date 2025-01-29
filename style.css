@@ -21,7 +21,7 @@
 }
 
 html {
-	font-size: 62.5%;
+	/* font-size: 62.5%; */
 	overflow-x: hidden;
 }
 
@@ -83,8 +83,7 @@ html {
 	}
 }
 
-/* #Primary style
-================================================== */
+/* #Primary style */
 
 .section {
 	position: relative;
@@ -99,8 +98,6 @@ html {
 .full-height {
 	height: 100vh;
 }
-
-/* #Navigation */
 
 .cd-header {
 	position: fixed;
@@ -143,6 +140,8 @@ html {
 .logo-wrap a:hover {
 	opacity: 0.9;
 }
+
+/* #Navigation */
 
 .nav-but-wrap {
 	position: relative;
@@ -435,6 +434,26 @@ body.nav-active .nav__list-item:nth-child(10) {
 	-webkit-transition-delay: 1.7s;
 	transition-delay: 1.7s;
 }
+
+@media screen and (max-width: 576px) {
+
+	/* Center the header elements properly */
+	.cd-header {
+		position: relative;
+		/* Allow header to scroll with content */
+		width: 100%;
+		text-align: center;
+	}
+
+	.logo-wrap a {
+		position: relative;
+		font-size: 1.5rem;
+		/* Smaller logo size */
+
+	}
+}
+
+/* #Switch for dark mode */
 
 .switch-wrap {
 	position: absolute;
